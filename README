@@ -1,0 +1,26 @@
+Device: MP751A
+Manufacturer: Master KIT
+URL: http://masterkit.ru/shop/smarthome/control/1319335
+
+Description:
+    Unofficial sources of power control tool for USB power trigger mp751A.
+    Tool provide functional to power on/off and checking the state of the device under Linux.
+
+Dependencies:
+    libusb-1.0
+    pthread
+    glibc
+
+Attention:
+    This code provided "as is" and author give you no guarantee
+    to operability with any other devices or device may be damaged!
+    Some functional received by intuitive and empirical methods.
+
+AutoBuild: (Ubuntu, Fedora checked)
+    bash tools/install.sh
+
+Compile:
+    make all
+
+Usage:
+    mp751ctl [on|off|state]
