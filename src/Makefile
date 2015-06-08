@@ -1,16 +1,20 @@
+INCLUDES=$(shell pkg-config --cflags libusb-1.0)
+LIBS=$(shell pkg-config --libs libusb-1.0) -lrt -lpthread
+SOURCES=hid-libusb.c mp751ctl.c
+OBJECTS=$(SOURCES:.c=.o)
+TARGET=../mp751ctl
 
-all: mp751_POFF
+CFLAGS=-Wall $(INCLUDES) $(LIBS)
 
-mp751_POFF: mp751_POFF.o hid-libusb.o
-	gcc mp751_POFF.o hid-libusb.o -o mp751_POFF -lusb-1.0 -lrt -lpthread
+all: $(SOURCES) $(TARGET)
 
-mp751_POFF.o: mp751_POFF.c
-	gcc -c mp751_POFF.c
-	
-hid-libusb.o: hid-libusb.c 
-	gcc -I/usr/include/libusb-1.0 -I. -c hid-libusb.c
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+
+.c.o:
+	$(CC) $(CFLAGS) $< -c -o $@
 
 clean:
-	rm -f hid-libusb.o mp751_POFF.o mp751_POFF
+	rm -f $(OBJECTS) $(TARGET) 
 
 .PHONY: clean

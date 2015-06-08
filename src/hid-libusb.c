@@ -40,7 +40,7 @@
 #include <pthread.h>
 
 /* GNU / LibUSB */
-#include "libusb.h"
+#include <libusb.h>
 #include "iconv.h"
 
 #include "hidapi.h"
@@ -730,6 +730,9 @@ hid_device * HID_API_EXPORT hid_open_path(const char *path)
 	}
 	
 	num_devs = libusb_get_device_list(NULL, &devs);
+    if (num_devs < 0) {
+        return NULL;
+    }
 	while ((usb_dev = devs[d++]) != NULL) {
 		struct libusb_device_descriptor desc;
 		struct libusb_config_descriptor *conf_desc = NULL;
